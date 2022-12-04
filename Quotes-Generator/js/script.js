@@ -8,27 +8,38 @@ let buttons = document.querySelectorAll(".allBtn");
 let catbtn=document.querySelector('#category');
 let copyBtn = document.querySelector('#Cbtn');
 let cat=document.querySelector('#category');
-let url="https://free-quotes-api.herokuapp.com/";
+//let url="https://free-quotes-api.herokuapp.com/";
 let head=document.querySelector('.header h2');
 
 btn.addEventListener('click', function () {
-  let fetchRes = fetch(
-    url+cat.value,
-                                );
-            fetchRes.then(res =>
-                res.json()).then(d => {
-                  quote.innerHTML = d.quote;
-                  writer.innerHTML = '-' + d.author;
-                })
+ 
+    let fetchRes = fetch(
+      'https://api.api-ninjas.com/v1/quotes?category=' + cat.value,{
+        method: 'GET',
+        headers: { 'X-Api-Key': 'iIBoMtAYbDLAkANKGzmUQg==7POOjYoPoI3bf69i'},
+        contentType: 'application/json',
+        success: function(result) {
+        console.log(result);
+        }
+      }
+                                  );
+              fetchRes.then(res =>
+                  res.json()).then(d => {
+                    console.log(d[0]["quote"]);
+                    quote.innerHTML = d[0]["quote"];
+                    writer.innerHTML = '-' + d[0]["author"];
+                  })
+  
+ 
 	/*let random = Math.floor(Math.random() * quotes.length);
 	quote.innerHTML = quotes[random].text;
 	writer.innerHTML = '-' + quotes[random].author;*/
-  if(cat.style.backgroundColor!=="white"){
+ /* if(cat.style.backgroundColor!=="white"){
 	copyBtn.style.backgroundColor = '#fb7413';
   }
   else{
     copyBtn.style.backgroundColor = 'white';
-  }
+  }*/
 	copyBtn.innerHTML = "Copy ";
 });
 
